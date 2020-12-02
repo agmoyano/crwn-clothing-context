@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const WithLocalStorage = (WrappedProvider, key) => {
     let storedData = null;
@@ -10,13 +10,13 @@ const WithLocalStorage = (WrappedProvider, key) => {
 
     return ({children, ...props}) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [data, setData] = useState(storedData)
-        const storeData = (data) => {
-            setData(data);
+        const [data, setData] = useState(storedData);
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        useEffect(() => {
             localStorage.setItem(key, JSON.stringify(data))
-        }
+        }, [data])
         return (
-            <WrappedProvider {...props} store={[data, storeData]}>{children}</WrappedProvider>
+            <WrappedProvider {...props} store={[data, setData]}>{children}</WrappedProvider>
         )
     }
 }
