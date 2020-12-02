@@ -13,7 +13,7 @@ import { UserContext } from './providers/user/user.provider';
 
 const App = () => {
 
-  const currentUser = useContext(UserContext)
+  const {currentUser} = useContext(UserContext)
 
   return (
     <div>
